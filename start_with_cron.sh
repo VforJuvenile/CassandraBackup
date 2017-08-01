@@ -53,7 +53,7 @@ done
 printenv | grep -v "no_proxy" >> /etc/environment
 
 # Generate cron schedule for backup. Defaulted to every day at 1:00 AM if not specified
-echo "${CASSANDRA_BACKUP_CRON:-'0 1 * * *'} root /cassandra-aws-backup.sh -b s3://iherb-test-cassandra-backup -vcC -u ${CASSANDRA_USER} -p ${CASSANDRA_PASS} > /var/log/cassandra/backup.log 2>&1" > /etc/cron.d/cassandra_cron
+echo "${CASSANDRA_BACKUP_CRON:-'0 1 * * *'} root /cassandra-aws-backup.sh -b s3://${S3_BUCKET_NAME} -vcC -u ${CASSANDRA_USER} -p ${CASSANDRA_PASS} > /var/log/cassandra/backup.log 2>&1" > /etc/cron.d/cassandra_cron
 
 # start cron
 cron 
