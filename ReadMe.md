@@ -100,7 +100,7 @@ After the successful restore, modify the statefulset YAML. Remove the following 
     args: [ "while true; do sleep 30; done;" ]
 ```
 
-### Note: Your statefulset cassandra needs to have persistent volume. The persistent volume usually bounded by fixed name using Persistent volume claim. This makes cassandra storage resilient even we kill the POD like the way we are doing on this steps by adding and removing the infinite sleep.  
+> Note: Your statefulset cassandra needs to have persistent volume. The persistent volume usually bounded by fixed name using Persistent volume claim. This makes cassandra storage resilient even we kill the POD like the way we are doing on this steps by adding and removing the infinite sleep.  
 
 ## TODO
 
