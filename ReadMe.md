@@ -1,3 +1,5 @@
+# This is work-in-progress
+
 # Cassandra Kubernetes Backup and Restoration Steps
 
 This guide is using Cassandra-aws-backup.sh. It's already included with customized [Cassandra docker image][cassandra_kube]. The script is based on [Google Cloud Storage for Cassandra Disaster recovery][gcs_recovery] script and modified to make it work to AWS.
@@ -100,7 +102,7 @@ After the successful restore, modify the statefulset YAML. Remove the following 
     args: [ "while true; do sleep 30; done;" ]
 ```
 
-> Note: Your statefulset cassandra needs to have persistent volume. The persistent volume usually bounded by fixed name using Persistent volume claim. This makes cassandra storage resilient even we kill the POD like the way we are doing on this steps by adding and removing the infinite sleep.  
+> Note: Your statefulset cassandra needs to have persistent volume (PV). The persistent volume usually bounded by fixed name using persistent volume claim (PVC). This makes cassandra storage resilient even if we kill the POD like the way we are doing on these steps by adding and removing the infinite sleep.  
 
 ## TODO
 
