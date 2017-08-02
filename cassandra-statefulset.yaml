@@ -69,6 +69,10 @@ spec:
             value: GossipingPropertyFileSnitch  
           - name: CASSANDRA_BACKUP_CRON
             value: "0 1 * * *"
+          - name: CASSANDRA_USER
+            value: "cassandra"
+          - name: CASSANDRA_PASS
+            value: "PlwHdb8RSBQn"
           - name: AWS_ACCESS_KEY_ID
             value: "enter you aws access key"
           - name: AWS_SECRET_ACCESS_KEY

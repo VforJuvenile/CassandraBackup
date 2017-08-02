@@ -67,7 +67,7 @@ ENV CASSANDRA_CONFIG /etc/cassandra
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 COPY cassandra-aws-backup.sh /cassandra-aws-backup.sh
-ENTRYPOINT ["/docker-entrypoint.sh"]
+# ENTRYPOINT ["/docker-entrypoint.sh"]
 
 RUN mkdir -p /var/lib/cassandra "$CASSANDRA_CONFIG" \
 	&& chown -R cassandra:cassandra /var/lib/cassandra "$CASSANDRA_CONFIG" \
@@ -81,6 +81,7 @@ VOLUME /var/lib/cassandra
 # 9160: thrift service
 EXPOSE 7000 7001 7199 9042 9160
 
+COPY ready-probe.sh ready-probe.sh
 COPY cassandra.yaml /etc/cassandra/cassandra.yaml
 COPY start_with_cron.sh start_with_cron.sh
 
