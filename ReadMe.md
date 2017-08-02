@@ -4,13 +4,13 @@
 
 This guide is using Cassandra-aws-backup.sh. It's already included with customized [Cassandra docker image][cassandra_kube]. The script is based on [Google Cloud Storage for Cassandra Disaster recovery][gcs_recovery] script and modified to make it work to AWS.
 
-You can also build the custom Cassandra docker image ny executing the build command. 
+You can also build the custom Cassandra docker image by executing the build command. 
 
 ```bash
 docker build . --tag {tagname}
 ```
 
-> Note: ENTRYPOINT (docker-entrypoint.sh) is not used. In order to run CRON and Cassandra process we need to customized the image startup. The "start_with_cron.sh" is used instead to run CRON and then Cassandra on foreground. 
+> Note: ENTRYPOINT (docker-entrypoint.sh) is not used. To be able to run both CRON and Cassandra process we need to customize the image startup. The "start_with_cron.sh" is used instead to run CRON and then Cassandra on the foreground. 
 
 
 Cassandra custom docker image contains the following addition to support the backup and restore. 
