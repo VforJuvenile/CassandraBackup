@@ -37,7 +37,24 @@ spec:
       containers:
       - name: cassandra
         image: siganberg/cassandra_kube:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
+        lifecycle:
+          postStart:
+            exec:
+              command:
+                - bash
+                - -c 
+                - >                 
+                  #-- Copy environment variables to the following path so CRON can access the values  
+                  printenv | grep -v "no_proxy" >> /etc/environment; 
+                  #-- Generate CRON schedule for the backup
+                  echo "${CASSANDRA_BACKUP_CRON} root /cassandra-aws-backup.sh -b s3://${S3_BUCKET_NAME}/test/ -vcC -u ${CASSANDRA_USER} -p ${CASSANDRA_PASS} > /var/log/cassandra/backup.log 2>&1" > /etc/cron.d/cassandra_cron;
+                  cron;
+        #-- Uncomment this section for restoration. This will stop cassandra process to auto start
+        #command:  
+        #   - /bin/bash
+        #   - -c
+        #   - while true; do sleep 30; done;
         ports:
         - containerPort: 7000
           name: intra-node 
@@ -72,7 +89,7 @@ spec:
           - name: CASSANDRA_USER
             value: "cassandra"
           - name: CASSANDRA_PASS
-            value: "PlwHdb8RSBQn"
+            value: "somepassword"
           - name: AWS_ACCESS_KEY_ID
             value: "enter you aws access key"
           - name: AWS_SECRET_ACCESS_KEY
@@ -82,7 +99,8 @@ spec:
           - name: POD_IP
             valueFrom:
               fieldRef:
-                fieldPath: status.podIP               
+                fieldPath: status.podIP   
+        #-- comment readinessProbe during restoration.             
         readinessProbe:
           exec:
             command:
